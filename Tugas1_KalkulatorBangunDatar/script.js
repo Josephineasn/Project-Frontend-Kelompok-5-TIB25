@@ -7,8 +7,8 @@ var jawaban = document.getElementById('jawaban');
 var namaBangunDatar = document.getElementById('namaBangunDatar');
 var outputLuas = document.getElementById('outputLuas');
 var outputKeliling = document.getElementById('outputKeliling');
-var outputRumusLuas = document.getElementById('ouputRumusLuas');
-var outputRumusKeliling = document.getElementById('ouputRumusKeliling');
+var outputRumusLuas = document.getElementById('outputRumusLuas');
+var outputRumusKeliling = document.getElementById('outputRumusKeliling');
 
 var daftarBangun = {
     persegi: {
@@ -20,7 +20,7 @@ var daftarBangun = {
                 luas: s*s,
                 keliling: 4*s,
                 stepL: s + 'x' + s,
-                stepK: '4 x' + s 
+                stepK: '4 x ' + s 
             };
         }
     },
@@ -73,8 +73,8 @@ var daftarBangun = {
             return {
                 luas: 0.5*a*t,
                 keliling: a + t + c,
-                stepL:'1/2 x' + a + 'x' + t,
-                stepK: a + '+' + t + '+' + c.toFixed(2) + '(sisi miring c)'
+                stepL:'1/2 x ' + a + ' x ' + t,
+                stepK: a + ' + ' + t + ' + ' + c.toFixed(2) + ' (sisi miring c)'
             };
         }
     },
@@ -89,15 +89,15 @@ var daftarBangun = {
             var a = val.alas;
             var b = val.kaki;
             if(b <= a/2) {
-                alert('Panjang kaki harus lebih besar dari setengah alasnya (b > a/2!!!');
+                alert('Panjang kaki harus lebih besar dari setengah alasnya (b > a/2)!');
                 return null;
             }
             var t = Math.sqrt((b*b) - Math.pow(a/2, 2));
             return {
                 luas: 0.5*a*t,
                 keliling: a + (2*b),
-                stepL: '1/2 x' + a + 'x' + t.toFixed(2) + '(tinggi t)',
-                stepK: a + '+(2 x'+ b + ')'
+                stepL: '1/2 x ' + a + ' x ' + t.toFixed(2) + ' (tinggi t)',
+                stepK: a + ' + (2 x '+ b + ')'
             };
         }
     },
