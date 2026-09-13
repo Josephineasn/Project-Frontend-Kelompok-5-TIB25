@@ -184,3 +184,67 @@ var daftarBangun = {
         }
     }
 };
+
+// Ini fungsi buat minimal 0, tidak minus
+function formKalku() {
+    inputAngka.innerHTML = '';
+    jawaban.style.display = 'none';
+
+    var key = jenisBangunDatar.value;
+    var data = daftarBangun[key];
+    var teksHtml = '';
+
+    for (var i = 0; i < data.inputs.length; i++) {
+        var item = data.inputs[i];
+        teksHtml += '<p>';
+        teksHtml += '<label for="' + item.id + '">' + item.label + ' (cm):</label><br />';
+        // ini biar nilainya gabisa minus
+        teksHtml += '<input type="number" id="' + item.id + '" step="any" min="0" placeholder="Masukkan Angka">';
+        teksHtml += '</p>';
+    }
+
+    inputAngka.innerHTML = teksHtml;
+}
+
+jenisBangunDatar.addEventListener('change', formKalku);
+
+// tombol reset
+btnReset.addEventListener('click', function() {
+    jawaban.style.display = 'none';
+    formKalku();
+});
+
+// tombol hitung
+btnHitung.addEventListener('click', function() {
+    var key = jenisBangunDatar.value;
+    var data = daftarBangun[key];
+    var nilaiInput = {};
+
+    for (var i = 0; i < data.inputs.length; i++) {
+        var id = data.inputs[i].id;
+        var el = document.getElementById(id);
+        var val = parseFloat(el.value);
+
+        // tidak boleh kosong, minus, 0
+        if (isNaN(val) || val <= 0) {
+            alert('Nilai untuk ' + data.inputs[i].label + ' tidak boleh minus atau 0!');
+            return;
+        }
+        nilaiInput[id] = val;
+    }
+
+    var hasil = data.hitung(nilaiInput);
+    if (!hasil) return;
+
+    // Menampilkan hasil
+    namaBangunDatar.innerHTML = data.nama;
+    outputLuas.innerHTML = hasil.luas.toFixed(2);
+    outputKeliling.innerHTML = hasil.keliling.toFixed(2);
+    outputRumusLuas.innerHTML = hasil.stepL;
+    outputRumusKeliling.innerHTML = hasil.stepK;
+
+    jawaban.style.display = 'block';
+});
+
+// Inisialisasi awal
+formKalku();
