@@ -7,8 +7,8 @@ var jawaban = document.getElementById('jawaban');
 var namaBangunDatar = document.getElementById('namaBangunDatar');
 var outputLuas = document.getElementById('outputLuas');
 var outputKeliling = document.getElementById('outputKeliling');
-var outputRumusLuas = document.getElementById('ouputRumusLuas');
-var outputRumusKeliling = document.getElementById('ouputRumusKeliling');
+var outputRumusLuas = document.getElementById('outputRumusLuas');
+var outputRumusKeliling = document.getElementById('outputRumusKeliling');
 
 var daftarBangun = {
     persegi: {
@@ -101,4 +101,86 @@ var daftarBangun = {
             };
         }
     },
+    segitigaSamaSisi: {
+        nama: 'Segitiga Sama Sisi',
+        inputs: [{ id: 'sisi', label: 'Panjang Sisi (s)' }],
+        hitung: function(val) {
+            var s = val.sisi;
+            return {
+                luas: (Math.sqrt(3) / 4) * Math.pow(s, 2),
+                keliling: 3 * s,
+                stepL: '(√3 / 4) x ' + s + '²',
+                stepK: '3 x ' + s
+            };
+        }
+    },
+    belahKetupat: {
+        nama: 'Belah Ketupat',
+        inputs: [
+            { id: 'd1', label: 'Diagonal 1 (d1)' },
+            { id: 'd2', label: 'Diagonal 2 (d2)' }
+        ],
+        hitung: function(val) {
+            var d1 = val.d1;
+            var d2 = val.d2;
+            var s = Math.sqrt(Math.pow(d1 / 2, 2) + Math.pow(d2 / 2, 2));
+            return {
+                luas: 0.5 * d1 * d2,
+                keliling: 4 * s,
+                stepL: '1/2 x ' + d1 + ' x ' + d2,
+                stepK: '4 x ' + s.toFixed(2) + ' (sisi s)'
+            };
+        }
+    },
+    trapesium: {
+        nama: 'Trapesium Sama Kaki',
+        inputs: [
+            { id: 'a', label: 'Sisi Atas (a)' },
+            { id: 'b', label: 'Sisi Bawah (b)' },
+            { id: 'tinggi', label: 'Tinggi (t)' }
+        ],
+        hitung: function(val) {
+            var a = val.a;
+            var b = val.b;
+            var t = val.tinggi;
+            var delta = Math.abs(b - a) / 2;
+            var kaki = Math.sqrt((delta * delta) + (t * t));
+            return {
+                luas: 0.5 * (a + b) * t,
+                keliling: a + b + (2 * kaki),
+                stepL: '1/2 x (' + a + ' + ' + b + ') x ' + t,
+                stepK: a + ' + ' + b + ' + 2 x ' + kaki.toFixed(2) + ' (kaki miring)'
+            };
+        }
+    },
+    lingkaran: {
+        nama: 'Lingkaran',
+        inputs: [{ id: 'r', label: 'Jari-Jari (r)' }],
+        hitung: function(val) {
+            var r = val.r;
+            return {
+                luas: Math.PI * r * r,
+                keliling: 2 * Math.PI * r,
+                stepL: 'π x ' + r + '²',
+                stepK: '2 x π x ' + r
+            };
+        }
+    },
+    layangLayang: {
+        nama: 'Layang-Layang',
+        inputs: [
+            { id: 'd1', label: 'Diagonal 1 (d1)' },
+            { id: 'd2', label: 'Diagonal 2 (d2)' },
+            { id: 's1', label: 'Sisi Pendek (a)' },
+            { id: 's2', label: 'Sisi Panjang (b)' }
+        ],
+        hitung: function(val) {
+            return {
+                luas: 0.5 * val.d1 * val.d2,
+                keliling: 2 * (val.s1 + val.s2),
+                stepL: '1/2 x ' + val.d1 + ' x ' + val.d2,
+                stepK: '2 x (' + val.s1 + ' + ' + val.s2 + ')'
+            };
+        }
+    }
 };
