@@ -9,10 +9,12 @@ var outputLuas = document.getElementById('outputLuas');
 var outputKeliling = document.getElementById('outputKeliling');
 var outputRumusLuas = document.getElementById('outputRumusLuas');
 var outputRumusKeliling = document.getElementById('outputRumusKeliling');
+var gambarBangun = document.getElementById('gambarBangun');
 
 var daftarBangun = {
     persegi: {
         nama: 'Persegi/Bujur Sangkar',
+        gambar: 'https://cdn0-production-images-kly.akamaized.net/jF2EgeMGHuU5myQpSw7c56ifwQg=/1200x675/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3409130/original/098589600_1616496130-persegi.jpg',
         inputs: [{id: 'sisi', label: 'Panjang Sisi (s)'}],
         hitung: function(val) {
             var s = val.sisi;
@@ -20,13 +22,14 @@ var daftarBangun = {
                 luas: s*s,
                 keliling: 4*s,
                 stepL: s + 'x' + s,
-                stepK: '4 x ' + s 
+                stepK: '4 x ' + s
             };
         }
     },
 
     persegiPanjang: {
         nama: 'Persegi Panjang',
+        gambar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlqtK-Lbv_vIw6eyFRu49Ri2qBzZUUHlfGK3YEOgd31ZFUTn_6kMMflyM&s=10',
         inputs: [
             {id: 'panjang', label: 'Panjang (p)'},
             {id: 'lebar', label: 'Lebar (l)'}
@@ -45,6 +48,7 @@ var daftarBangun = {
 
     jajaranGenjang: {
         nama: 'Jajaran Genjang',
+        gambar: 'https://cnc-magazine.oramiland.com/parenting/images/rumus_luas_jajar_genjang-x.width-800.format-webp.webp',
         inputs: [
             {id: 'alas', label: 'Alas (a)'},
             {id: 'miring', label: 'Sisi Miring (b)'},
@@ -62,6 +66,7 @@ var daftarBangun = {
 
     segitigaSiku: {
         nama: 'Segitiga Siku-Siku',
+        gambar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQstnnubZU-pGT5FlhbNXmXL4LOJAoky-bn6WLoWABAgqCehUP1TUBcT7QB&s=10',
         inputs: [
             {id: 'alas', label: 'Alas (a)'},
             {id: 'tinggi', label: 'Tinggi (t)'}
@@ -81,6 +86,7 @@ var daftarBangun = {
 
     segitigaSamaKaki: {
         nama: 'Segitiga Sama Kaki',
+        gambar: 'https://image.popmama.com/post/20230825/segitiga-sama-kakipng-32712ca0109fc8b3e5bd9c2af05fd38d.png',
         inputs: [
             {id: 'alas', label: 'Alas (a)'},
             {id: 'kaki', label: 'Sisi Kaki (b)'}
@@ -103,6 +109,7 @@ var daftarBangun = {
     },
     segitigaSamaSisi: {
         nama: 'Segitiga Sama Sisi',
+        gambar: 'https://uptdsmpn3bangkalan.sch.id/wp-content/uploads/2024/01/segitiga-bangun-datar.png',
         inputs: [{ id: 'sisi', label: 'Panjang Sisi (s)' }],
         hitung: function(val) {
             var s = val.sisi;
@@ -116,6 +123,7 @@ var daftarBangun = {
     },
     belahKetupat: {
         nama: 'Belah Ketupat',
+        gambar: 'https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-rhombus-shape-icon-vector-illustrationflat-design-symbol-play-illustration-vector-png-image_41365036.jpg',
         inputs: [
             { id: 'd1', label: 'Diagonal 1 (d1)' },
             { id: 'd2', label: 'Diagonal 2 (d2)' }
@@ -134,6 +142,7 @@ var daftarBangun = {
     },
     trapesium: {
         nama: 'Trapesium Sama Kaki',
+        gambar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Isosceles_trapezoid.jpg/250px-Isosceles_trapezoid.jpg?utm_source=id.wikibooks.org&utm_campaign=parser&utm_content=thumbnail',
         inputs: [
             { id: 'a', label: 'Sisi Atas (a)' },
             { id: 'b', label: 'Sisi Bawah (b)' },
@@ -155,6 +164,7 @@ var daftarBangun = {
     },
     lingkaran: {
         nama: 'Lingkaran',
+        gambar: 'https://i.pinimg.com/736x/cd/f6/c3/cdf6c30af44ef4d7cf3e1f15952f2990.jpg',
         inputs: [{ id: 'r', label: 'Jari-Jari (r)' }],
         hitung: function(val) {
             var r = val.r;
@@ -168,6 +178,7 @@ var daftarBangun = {
     },
     layangLayang: {
         nama: 'Layang-Layang',
+        gambar: 'https://assets.kejarcita.id/MbNKnFpouRGW1irDFSB1t1XP',
         inputs: [
             { id: 'd1', label: 'Diagonal 1 (d1)' },
             { id: 'd2', label: 'Diagonal 2 (d2)' },
@@ -194,11 +205,18 @@ function formKalku() {
     var data = daftarBangun[key];
     var teksHtml = '';
 
+    if (data.gambar) {
+        gambarBangun.src = data.gambar;
+        gambarBangun.style.display = 'block';
+    } else {
+        gambarBangun.removeAttribute('src');
+        gambarBangun.style.display = 'none';
+    }
+
     for (var i = 0; i < data.inputs.length; i++) {
         var item = data.inputs[i];
         teksHtml += '<p>';
         teksHtml += '<label for="' + item.id + '">' + item.label + ' (cm):</label><br />';
-        // ini biar nilainya gabisa minus
         teksHtml += '<input type="number" id="' + item.id + '" step="any" min="0" placeholder="Masukkan Angka">';
         teksHtml += '</p>';
     }
